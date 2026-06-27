@@ -1,0 +1,11 @@
+# Keep the build context small and never copy local-only or secret files
+# into the image. Dependencies are installed fresh inside the container.
+node_modules
+.venv
+.env
+.env.*
+__pycache__
+*.pyc
+*.pyo
+npm-debug.log
+.DS_Store
