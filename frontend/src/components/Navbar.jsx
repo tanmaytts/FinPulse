@@ -34,6 +34,30 @@ export default function Navbar() {
             >
               Compare
             </NavLink>
+            <NavLink
+              to="/sectors"
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors no-underline ${
+                  isActive
+                    ? 'text-blue-700 border-b-2 border-blue-700 pb-0.5'
+                    : 'text-gray-600 hover:text-blue-700'
+                }`
+              }
+            >
+              Sectors
+            </NavLink>
+            <NavLink
+              to="/heatmap"
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors no-underline ${
+                  isActive
+                    ? 'text-blue-700 border-b-2 border-blue-700 pb-0.5'
+                    : 'text-gray-600 hover:text-blue-700'
+                }`
+              }
+            >
+              Heatmap
+            </NavLink>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchStock } from '../api/client';
 import PriceChart from '../components/PriceChart';
+import CandlestickChart from '../components/CandlestickChart';
 import { Loading, ErrorView } from '../components/StateViews';
 import {
   formatPrice,
@@ -27,6 +28,7 @@ export default function StockDetail() {
   const [stock, setStock] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [chartMode, setChartMode] = useState('line'); // 'line' or 'candle'
 
   const decodedTicker = decodeURIComponent(ticker);
 
@@ -114,7 +116,34 @@ export default function StockDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <PriceChart ticker={decodedTicker} />
+          {/* Chart mode toggle */}
+          <div className="flex gap-2 mb-3">
+            <button
+              onClick={() => setChartMode('line')}
+              className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                chartMode === 'line'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              Line Chart
+            </button>
+            <button
+              onClick={() => setChartMode('candle')}
+              className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+                chartMode === 'candle'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              Candlestick + Volume
+            </button>
+          </div>
+          {chartMode === 'line' ? (
+            <PriceChart ticker={decodedTicker} />
+          ) : (
+            <CandlestickChart ticker={decodedTicker} />
+          )}
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
