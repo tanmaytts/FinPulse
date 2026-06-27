@@ -48,3 +48,11 @@ create table if not exists price_history (
 -- even when price_history grows to hundreds of thousands of rows.
 create index if not exists idx_price_history_ticker_date
   on price_history (ticker, date);
+
+-- Supabase: grant the backend secret (service_role) access to these tables.
+-- Needed because the project was created with "expose new tables" off, which
+-- otherwise leaves the API roles without table privileges. The backend uses
+-- the service_role key, so we grant it directly (public/anon stays restricted).
+grant usage on schema public to service_role;
+grant all privileges on all tables in schema public to service_role;
+grant all privileges on all sequences in schema public to service_role;
